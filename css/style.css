@@ -1706,6 +1706,10 @@ body::after {
      object-fit: cover;
 }
 
+.post__slide picture {
+  width: 100%;
+}
+
 .post__slide:hover .post__slide-bg {
   opacity: 1;
 }
