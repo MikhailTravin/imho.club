@@ -9680,24 +9680,35 @@ PERFORMANCE OF THIS SOFTWARE.
             modules_flsModules.gallery = galleyItems;
         }
         const account = document.querySelector(".header__account");
+        const notificationWrapper = document.querySelector(".header__notification");
         const htmlElement = document.documentElement;
-        function closeAccount(event) {
-            if (!account.contains(event.target)) {
-                account.classList.remove("_active");
-                htmlElement.classList.remove("shadow-open");
-            }
+        function closeAccount() {
+            account.classList.remove("active");
         }
-        document.querySelector(".header__author").addEventListener("click", (function() {
-            if (account.classList.contains("_active")) {
-                account.classList.remove("_active");
-                htmlElement.classList.remove("shadow-open");
-            } else {
-                account.classList.add("_active");
-                htmlElement.classList.add("shadow-open");
-            }
+        account.addEventListener("click", (e => {
+            e.stopPropagation();
+            const isActive = account.classList.contains("active");
+            account.classList.toggle("active", !isActive);
+            htmlElement.classList.add("shadow-open");
+            if (!isActive) notificationWrapper.classList.remove("active");
         }));
-        document.addEventListener("click", (function(event) {
-            if (!account.contains(event.target)) closeAccount(event);
+        notificationWrapper.addEventListener("click", (e => {
+            e.stopPropagation();
+            const isActive = notificationWrapper.classList.contains("active");
+            notificationWrapper.classList.toggle("active", !isActive);
+            htmlElement.classList.remove("shadow-open");
+            if (!isActive) closeAccount();
+        }));
+        document.addEventListener("click", (e => {
+            const target = e.target;
+            if (!notificationWrapper.contains(target)) {
+                notificationWrapper.classList.remove("active");
+                htmlElement.classList.remove("shadow-open");
+            }
+            if (!account.contains(target) && !document.querySelector(".header__author").contains(target)) {
+                closeAccount();
+                htmlElement.classList.remove("shadow-open");
+            }
         }));
         function indents() {
             const header = document.querySelector(".header");
@@ -9719,41 +9730,85 @@ PERFORMANCE OF THIS SOFTWARE.
             indents();
         }));
         indents();
-        document.getElementById("upload-pic").addEventListener("change", (function(event) {
-            const files = Array.from(event.target.files);
-            const container = document.getElementById("preview-container");
-            container.innerHTML = "";
-            files.forEach((file => {
-                if (!file.type.startsWith("image/")) return;
+        const imageInput = document.querySelector('.popup-share-thoughts__files input[type="file"][accept="image/*"]');
+        const videoInput = document.querySelector('.popup-share-thoughts__files input[type="file"][accept="video/*"]');
+        const previewContainer = document.querySelector(".previews");
+        function createPreview(file, type) {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("preview-item");
+            if ("image" === type) {
+                const img = document.createElement("img");
+                img.classList.add("preview-img");
                 const reader = new FileReader;
                 reader.onload = function(e) {
-                    const img = document.createElement("img");
                     img.src = e.target.result;
-                    img.style.maxWidth = "100%";
-                    img.style.borderRadius = "6px";
-                    container.appendChild(img);
                 };
                 reader.readAsDataURL(file);
-            }));
-        }));
-        document.getElementById("upload-video").addEventListener("change", (function(event) {
-            const files = Array.from(event.target.files);
-            const container = document.getElementById("preview-container");
-            container.innerHTML = "";
-            files.forEach((file => {
-                if (!file.type.startsWith("video/")) return;
-                const videoURL = URL.createObjectURL(file);
-                const video = document.createElement("video");
-                video.src = videoURL;
-                video.controls = true;
-                video.style.width = "100%";
-                video.style.borderRadius = "6px";
-                container.appendChild(video);
-            }));
-        }));
+                const removeBtn = document.createElement("div");
+                removeBtn.classList.add("preview-remove");
+                removeBtn.innerHTML = "&times;";
+                removeBtn.addEventListener("click", (e => {
+                    e.stopPropagation();
+                    wrapper.remove();
+                }));
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+            }
+            if ("video" === type) {
+                const videoWrapper = document.createElement("div");
+                videoWrapper.classList.add("preview-video");
+                const playIcon = `\n                <svg class="preview-video-icon" viewBox="0 0 24 24" width="24" height="24">\n                    <circle cx="12" cy="12" r="10" fill="#000" opacity="0.6"/>\n                    <polygon points="10,8 16,12 10,16" fill="#fff"/>\n                </svg>\n            `;
+                const fileName = document.createElement("div");
+                fileName.textContent = file.name;
+                fileName.classList.add("preview-video-name");
+                const removeBtn = document.createElement("div");
+                removeBtn.classList.add("preview-remove");
+                removeBtn.innerHTML = "&times;";
+                removeBtn.addEventListener("click", (() => {
+                    wrapper.remove();
+                }));
+                videoWrapper.innerHTML = playIcon;
+                wrapper.appendChild(videoWrapper);
+                wrapper.appendChild(fileName);
+                wrapper.appendChild(removeBtn);
+            }
+            previewContainer.appendChild(wrapper);
+        }
+        function setupInput(input, type) {
+            if (!input) return;
+            let currentInput = input;
+            function onChange() {
+                const file = currentInput.files[0];
+                if (!file) return;
+                createPreview(file, type);
+                currentInput.value = "";
+                const newInput = currentInput.cloneNode(true);
+                currentInput.replaceWith(newInput);
+                currentInput = newInput;
+                currentInput.addEventListener("change", onChange);
+            }
+            currentInput.addEventListener("change", onChange);
+        }
+        setupInput(imageInput, "image");
+        setupInput(videoInput, "video");
         document.getElementById("acceptCookies").addEventListener("click", (function() {
             document.cookie = "cookiesAccepted=true; max-age=" + 365 * 24 * 60 * 60 + "; path=/";
             document.getElementById("cookieNotice").style.display = "none";
+        }));
+        const dotsList = document.querySelectorAll(".post__dots");
+        dotsList.forEach((dots => {
+            dots.addEventListener("click", (function(e) {
+                e.stopPropagation();
+                dotsList.forEach((other => {
+                    if (other !== this) other.classList.remove("active");
+                }));
+                this.classList.toggle("active");
+            }));
+        }));
+        document.addEventListener("click", (function(e) {
+            dotsList.forEach((dots => {
+                if (!dots.contains(e.target)) dots.classList.remove("active");
+            }));
         }));
         window["FLS"] = false;
     })();

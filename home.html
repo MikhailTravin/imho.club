@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20250521031734">
+	<link rel="stylesheet" href="css/style.min.css?_v=20250523181906">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,12 +37,52 @@
 						</svg>
 					</button>
 					<a href="#" class="header__club button">Мой клуб</a>
-					<a href="#" class="header__notification">
+					<div class="header__notification notification-header">
 						<svg aria-hidden="true" width="28" height="29">
 							<use xlink:href="img/icons/icons.svg#svg-notification"></use>
 						</svg>
 						<span>20</span>
-					</a>
+						<div class="notification-header__body">
+							<div data-simplebar class="notification-header__content">
+								<a href="#" class="notification-header__column">
+									<div class="notification-header__data">01.01.25</div>
+									<div class="notification-header__header">
+										<div class="notification-header__title">опубликовал первую заметку</div>
+										<div class="notification-header__subtitle">
+											Lorem, ipsum dolor sit amet consectetur
+										</div>
+									</div>
+								</a>
+								<a href="#" class="notification-header__column">
+									<div class="notification-header__data">01.01.25</div>
+									<div class="notification-header__header">
+										<div class="notification-header__title">опубликовал первую заметку</div>
+										<div class="notification-header__subtitle">
+											Lorem, ipsum dolor sit amet consectetur Lorem, ipsum dolor sit amet consectetur
+										</div>
+									</div>
+								</a>
+								<a href="#" class="notification-header__column">
+									<div class="notification-header__data">01.01.25</div>
+									<div class="notification-header__header">
+										<div class="notification-header__title">опубликовал первую заметку</div>
+										<div class="notification-header__subtitle">
+											Lorem, ipsum dolor sit amet consectetur
+										</div>
+									</div>
+								</a>
+								<a href="#" class="notification-header__column">
+									<div class="notification-header__data">01.01.25</div>
+									<div class="notification-header__header">
+										<div class="notification-header__title">опубликовал первую заметку</div>
+										<div class="notification-header__subtitle">
+											Lorem, ipsum dolor sit amet consectetur Lorem, ipsum dolor sit amet consectetur
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
 					<div class="header__account">
 						<div class="header__author">
 							<button type="button" class="icon-menu"><span></span></button>
@@ -623,6 +663,16 @@
 										<svg aria-hidden="true" width="16" height="4">
 											<use xlink:href="img/icons/icons.svg#svg-dots"></use>
 										</svg>
+										<div class="post__menu">
+											<div class="post__menu-content">
+												<button type="button">
+													<svg aria-hidden="true" width="16" height="16">
+														<use xlink:href="img/icons/icons.svg#svg-copylink"></use>
+													</svg>
+													Скопировать ссылку
+												</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -718,6 +768,22 @@
 										<svg aria-hidden="true" width="16" height="4">
 											<use xlink:href="img/icons/icons.svg#svg-dots"></use>
 										</svg>
+										<div class="post__menu">
+											<div class="post__menu-content">
+												<button type="button">
+													<svg aria-hidden="true" width="16" height="16">
+														<use xlink:href="img/icons/icons.svg#svg-pen"></use>
+													</svg>
+													Редактировать
+												</button>
+												<button type="button" class="remove">
+													<svg aria-hidden="true" width="16" height="16">
+														<use xlink:href="img/icons/icons.svg#svg-remove"></use>
+													</svg>
+													Удалить
+												</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1032,20 +1098,20 @@
 					<div class="popup-share-thoughts__textarea">
 						<textarea placeholder="Опубликуйте заметку в текстовом или видео формате, добавьте изображение"></textarea>
 					</div>
-					<div id="preview-container"></div>
+					<div class="previews"></div>
 					<div class="popup-share-thoughts__bottom">
 						<div class="popup-share-thoughts__files">
 							<!-- Фото -->
-							<div class="popup-share-thoughts__file file-pic">
-								<input type="file" accept="image/*" id="upload-pic" multiple>
+							<div class="popup-share-thoughts__file">
+								<input type="file" accept="image/*">
 								<svg aria-hidden="true" width="20" height="20">
 									<use xlink:href="img/icons/icons.svg#svg-pic"></use>
 								</svg>
 							</div>
 
 							<!-- Видео -->
-							<div class="popup-share-thoughts__file file-video">
-								<input type="file" accept="video/*" id="upload-video" multiple>
+							<div class="popup-share-thoughts__file">
+								<input type="file" accept="video/*">
 								<svg aria-hidden="true" width="20" height="20">
 									<use xlink:href="img/icons/icons.svg#svg-video"></use>
 								</svg>
@@ -1053,14 +1119,14 @@
 						</div>
 						<div class="popup-share-thoughts__buttons">
 							<button type="submit" class="popup-share-thoughts__public button-red">Опубликовать</button>
-							<div class="popup-share-thoughts__cancel button">Отмена</div>
+							<button type="button" data-close class="popup-share-thoughts__cancel button">Отмена</button>
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20250521031734"></script>
+	<script src="js/app.min.js?_v=20250523181906"></script>
 </body>
 
 </html>
