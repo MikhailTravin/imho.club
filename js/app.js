@@ -9679,36 +9679,53 @@ PERFORMANCE OF THIS SOFTWARE.
             }));
             modules_flsModules.gallery = galleyItems;
         }
-        const account = document.querySelector(".header__account");
-        const notificationWrapper = document.querySelector(".header__notification");
-        const htmlElement = document.documentElement;
-        function closeAccount() {
-            account.classList.remove("active");
-        }
-        account.addEventListener("click", (e => {
-            e.stopPropagation();
-            const isActive = account.classList.contains("active");
-            account.classList.toggle("active", !isActive);
-            htmlElement.classList.add("shadow-open");
-            if (!isActive) notificationWrapper.classList.remove("active");
-        }));
-        notificationWrapper.addEventListener("click", (e => {
-            e.stopPropagation();
-            const isActive = notificationWrapper.classList.contains("active");
-            notificationWrapper.classList.toggle("active", !isActive);
-            htmlElement.classList.remove("shadow-open");
-            if (!isActive) closeAccount();
-        }));
-        document.addEventListener("click", (e => {
-            const target = e.target;
-            if (!notificationWrapper.contains(target)) {
-                notificationWrapper.classList.remove("active");
-                htmlElement.classList.remove("shadow-open");
+        document.addEventListener("DOMContentLoaded", (function() {
+            const account = document.querySelector(".header__account");
+            const author = document.querySelector(".header__author");
+            function closeAccount() {
+                account.classList.remove("active");
+                document.documentElement.classList.remove("shadow-open");
             }
-            if (!account.contains(target) && !document.querySelector(".header__author").contains(target)) {
-                closeAccount();
-                htmlElement.classList.remove("shadow-open");
+            author.addEventListener("click", (function(e) {
+                e.stopPropagation();
+                account.classList.toggle("active");
+                if (account.classList.contains("active")) document.documentElement.classList.add("shadow-open"); else document.documentElement.classList.remove("shadow-open");
+            }));
+            document.addEventListener("click", (function(e) {
+                if (!account.contains(e.target) && !author.contains(e.target)) closeAccount();
+            }));
+        }));
+        document.addEventListener("DOMContentLoaded", (function() {
+            const headerNotification = document.querySelector(".header__notification");
+            const notificationIcon = document.querySelector(".notification-header__icon");
+            function closeAccount() {
+                headerNotification.classList.remove("active");
+                document.documentElement.classList.remove("shadow-open");
             }
+            notificationIcon.addEventListener("click", (function(e) {
+                e.stopPropagation();
+                headerNotification.classList.toggle("active");
+                if (headerNotification.classList.contains("active")) document.documentElement.classList.add("shadow-open"); else document.documentElement.classList.remove("shadow-open");
+            }));
+            document.addEventListener("click", (function(e) {
+                if (!headerNotification.contains(e.target) && !notificationIcon.contains(e.target)) closeAccount();
+            }));
+        }));
+        document.addEventListener("DOMContentLoaded", (function() {
+            const settingsNotification = document.querySelector(".settings-notification__body");
+            const settingsIcon = document.querySelector(".settings-notification__icon");
+            function closeAccount() {
+                settingsNotification.classList.remove("active");
+                document.documentElement.classList.remove("shadow-open");
+            }
+            settingsIcon.addEventListener("click", (function(e) {
+                e.stopPropagation();
+                settingsNotification.classList.toggle("active");
+                if (settingsNotification.classList.contains("active")) document.documentElement.classList.add("shadow-open"); else document.documentElement.classList.remove("shadow-open");
+            }));
+            document.addEventListener("click", (function(e) {
+                if (!settingsNotification.contains(e.target) && !settingsIcon.contains(e.target)) closeAccount();
+            }));
         }));
         function indents() {
             const header = document.querySelector(".header");
