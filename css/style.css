@@ -817,7 +817,7 @@ body::after {
   top: 0;
   left: 201px;
   width: calc(100% - 201px);
-  z-index: 100;
+  z-index: 120;
   -webkit-box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.07);
           box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.07);
   border-bottom: 1px solid #dcdcdc;
@@ -1355,8 +1355,6 @@ body::after {
   border-radius: 50%;
 }
 
-/* From Uiverse.io by ErzenXz */
-
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -1424,7 +1422,7 @@ body::after {
   left: 0;
   pointer-events: none;
   opacity: 0;
-  z-index: -1;
+  z-index: 1;
   -webkit-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   transition: opacity 0.3s;
@@ -3517,6 +3515,9 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   .header__plus {
     padding: 5px;
     border-radius: 5px;
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
   }
 
   .header__plus svg {
@@ -3529,7 +3530,27 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item:not(.lg-zoomable).lg-co
   }
 
   .header__notification {
-    display: none;
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+    margin: 3px 10px 0px 0px;
+  }
+
+  .header__notification span {
+    top: -1px;
+    font-size: 10px;
+    right: -10px;
+  }
+
+  .header__notification svg {
+    width: 23px;
+    height: 25px;
+  }
+
+  .header__account {
+    -webkit-box-ordinal-group: 4;
+        -ms-flex-order: 3;
+            order: 3;
   }
 
   .header__author {
